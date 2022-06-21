@@ -11,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in filteredPost" v-bind:key="item.id" limit:15>
+          <tr v-for="item in post" v-bind:key="item.id">
             <td>{{ item.id }}</td>
             <td>{{ item.userId }}</td>
             <td>{{ item.title }}</td>
@@ -29,21 +29,19 @@ export default {
   data() {
     return {
       post: [],
-      limit: 15,
     };
   },
 
   created: function () {
     this.$axios
-      .get("https://jsonplaceholder.typicode.com/posts")
+      .get("https://jsonplaceholder.typicode.com/posts", {
+        params: {
+          _limit: 15,
+        },
+      })
       .then((res) => {
         this.post = res.data;
       });
-  },
-  computed: {
-    filteredPost() {
-      return this.post.filter((el, item) => item);
-    },
   },
 };
 </script>

@@ -200,17 +200,19 @@
 
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-        <v-toolbar-title class="title">Salamat Vuetify</v-toolbar-title>
+        <v-toolbar-title class="title">Axios</v-toolbar-title>
 
         <v-spacer></v-spacer>
-
-        <v-text-field
-          label="Search Here ! "
-          placeholder="hindi pa gumagana HAHAHAHAHa"
-          filled
-          dense
-          prepend-inner-icon="mdi-magnify"
-        ></v-text-field>
+        <div class="searchbar">
+          <v-text-field
+            v-model="search"
+            label="Search Here ! "
+            placeholder="hindi pa gumagana HAHAHAHAHa"
+            filled
+            dense
+            prepend-inner-icon="mdi-magnify"
+          ></v-text-field>
+        </div>
 
         <v-menu bottom left>
           <template v-slot:activator="{ on, attrs }">
@@ -255,14 +257,15 @@
       <v-sheet
         id="scrolling-techniques-4"
         class="overflow-y-auto"
-        max-height="2000"
+        max-height="auto"
       >
-        <v-container style="height: 1000px"></v-container>
+        <v-container style="height: 220px"></v-container>
       </v-sheet>
     </v-card>
     <div>
       <v-content><router-view /></v-content>
     </div>
+    <myTable />
   </div>
 </template>
 <script>
@@ -291,5 +294,9 @@ export default {
 }
 .title {
   font-size: 50px;
+}
+.searchbar {
+  margin-left: 200px;
+  padding: 20px;
 }
 </style>

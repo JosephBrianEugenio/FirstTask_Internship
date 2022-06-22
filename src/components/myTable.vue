@@ -35,8 +35,9 @@
 export default {
   name: "myTable",
   data: () => ({
+    post: [],
     cards: [
-      { title: "ID#1" },
+      { title: "ID#1", post: [] },
       { title: "ID#2" },
       { title: "ID#3" },
       { title: "ID#4" },
@@ -53,6 +54,17 @@ export default {
       { title: "ID#15" },
     ],
   }),
+  created: function () {
+    this.$axios
+      .get("https://jsonplaceholder.typicode.com/posts", {
+        params: {
+          _limit: 15,
+        },
+      })
+      .then((res) => {
+        this.post = res.data;
+      });
+  },
 };
 </script>
 <style>

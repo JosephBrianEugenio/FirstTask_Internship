@@ -12,10 +12,15 @@ const routes = [
     component: post,
   },
   {
-    path: "/post1",
+    path: "/post/:id",
     name: "post1",
     component: post1,
   },
+  //   {
+  //     path: "/comments",
+  //     name: "comments",
+  //     component: comms,
+  //   },
 ];
 
 const router = new VueRouter({

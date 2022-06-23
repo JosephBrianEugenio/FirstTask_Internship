@@ -1,29 +1,30 @@
 <template>
   <v-container class="grey lighten-5">
-    <v-row no-gutters>
-      <v-col v-for="card in cards" :key="card.title" :cols="4">
+    <v-row no-gutters v-for="item in post" v-bind:key="item.id">
+      <v-col :cols="15">
         <v-card class="mx-auto" max-width="auto" outlined>
-          <v-list-item three-line>
+          <v-list-item>
             <v-list-item-content>
-              <v-card-title v-text="card.title"></v-card-title>
-              <v-list-item-title class="title">
-                Want to see Information?
-              </v-list-item-title>
-              <!-- <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              > -->
+              <v-card-title>ID#:{{ item.id }}</v-card-title>
+              <v-list-item-title>UserID: {{ item.userId }} </v-list-item-title>
+              <v-list-item-title>Title: {{ item.title }} </v-list-item-title>
+              <v-list-item-title>Body: {{ item.body }}</v-list-item-title>
             </v-list-item-content>
 
             <v-list-item-avatar
               tile
-              size="80"
+              size="0"
               color="grey"
+              img
+              src="Animals\1p3xrubluf_Kangaroo_08.15.2012_Find_Your_Inner_Animal.jpg"
             ></v-list-item-avatar>
           </v-list-item>
 
           <v-card-actions>
-            <v-btn outlined rounded text> Click Me ! </v-btn>
+            <v-btn @click="Data(item.id)" outlined rounded text> Post </v-btn>
+            <v-btn @click="Data(item.id)" outlined rounded text>
+              Comments
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -34,10 +35,45 @@
 <script>
 export default {
   name: "myTable",
+  data() {
+    return {
+      post: [],
+    };
+  },
+  mounted() {
+    this.$axios
+      .get("https://jsonplaceholder.typicode.com/posts", {
+        params: {
+          _limit: 15,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.post = response.data;
+      });
+  },
+  created() {
+    this.post = this.$route.params.data;
+  },
+  methods: {
+    Data(id) {
+      this.$router.push(`post/${id}`);
+      //   this.$router.push({
+      //     name: "post1",
+      //     path: "/post1",
+      //     params: { data: this.post },
+      //   });
+    },
+  },
+};
+</script>
+<!-- <script>
+export default {
+  name: "myTable",
   data: () => ({
     post: [],
     cards: [
-      { title: "ID#1", post: [] },
+      { title: "ID#1" },
       { title: "ID#2" },
       { title: "ID#3" },
       { title: "ID#4" },
@@ -53,386 +89,28 @@ export default {
       { title: "ID#14" },
       { title: "ID#15" },
     ],
+
+    mounted() {
+      this.$axios
+        .get("https://jsonplaceholder.typicode.com/posts/", {
+          params: {
+            _limit: 15,
+          },
+        })
+        .then((response) => {
+          this.list = response.data;
+        });
+    },
   }),
-  created: function () {
-    this.$axios
-      .get("https://jsonplaceholder.typicode.com/posts", {
-        params: {
-          _limit: 15,
-        },
-      })
-      .then((res) => {
-        this.post = res.data;
+  methods: {
+    Data() {
+      this.$router.push({
+        name: "post1",
+        path: "/post1",
+        params: { data: this.post },
       });
+    },
   },
 };
-</script>
-<style>
-.mar {
-  display: flex;
-}
-</style>
-<!-- <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="2">
-        <v-card class="mx-auto" max-width="344" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="text-overline mb-4">OVERLINE</div>
-              <v-list-item-title class="text-h5 mb-1">
-                Headline 5
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
-            </v-list-item-content>
-
-            <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn outlined rounded text> Button </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col> -->
+</script> -->
+<style></style>

@@ -12,6 +12,9 @@
             </tr>
           </thead>
           <tbody>
+            {{
+              post
+            }}
             <tr v-for="item in post" v-bind:key="item.id">
               <td>{{ item.id }}</td>
               <td>{{ item.userId }}</td>
@@ -33,16 +36,14 @@ export default {
       post: [],
     };
   },
-
-  created: function () {
+  mounted() {
     this.$axios
-      .get("https://jsonplaceholder.typicode.com/posts/1", {
-        params: {
-          _limit: 15,
-        },
-      })
-      .then((res) => {
-        this.post = res.data;
+      .get(
+        `https://jsonplaceholder.typicode.com/posts/${this.$route.params.id}`
+      )
+      .then((response) => {
+        this.post = response.data;
+        console.log("SINGLE DATA", this.post);
       });
   },
 };

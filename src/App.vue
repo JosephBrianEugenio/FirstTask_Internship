@@ -250,6 +250,11 @@
                 >PostPage</router-link
               ></v-tab
             >
+            <!-- <v-tab
+              ><router-link class="routerTabPP" to="/comms"
+                >Comments</router-link
+              ></v-tab
+            > -->
           </v-tabs>
         </template>
       </v-app-bar>
@@ -269,8 +274,10 @@
   </div>
 </template>
 <script>
+import myTable from "./components/myTable.vue";
 export default {
   name: "App",
+  myTable,
 };
 </script>
 

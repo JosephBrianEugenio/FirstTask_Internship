@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     Data(id) {
-      this.$router.push(`post/${id}`);
+      this.$router.push(`post/${id}`, `post/${id}/comments${id}`);
     },
   },
 };

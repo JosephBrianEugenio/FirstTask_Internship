@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import post from "../components/myTable.vue";
 import post1 from "../components/myPoste.vue";
+
 Vue.use(VueRouter);
 
 const routes = [

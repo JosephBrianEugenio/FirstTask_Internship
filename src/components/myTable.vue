@@ -1,9 +1,9 @@
 <template>
   <v-container class="grey lighten-5">
-    <v-card height="500px" elevation="14">
+    <!-- <v-card height="500px" elevation="14">
       <v-card-title> This is the tile</v-card-title>
       <v-card-text> This is the text</v-card-text>
-    </v-card>
+    </v-card> -->
 
     <v-row no-gutters v-for="item in post" v-bind:key="item.id">
       <v-col :cols="30">
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       post: [],
-      search: null,
+      searchData: null,
       data: [],
     };
   },
@@ -72,11 +72,11 @@ export default {
       async getData() {
         await this.$axios
           .get(
-            `https://jsonplaceholder.typicode.com/posts?userId=${this.search}`
+            `https://jsonplaceholder.typicode.com/posts?userId=${this.searchData}`
           )
           .then((response) => {
-            this.data = response.data.item;
-            console.log(this.data);
+            this.Searchdata = response.data.item;
+            console.log(this.Searchdata);
           })
           .catch((error) => {
             console.log(error);

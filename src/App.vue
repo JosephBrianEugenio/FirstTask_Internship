@@ -25,20 +25,23 @@
         <v-spacer></v-spacer>
         <div class="searchbar">
           <v-text-field
-            v-model="search"
+            v-model="searchData"
             @submit.prevent="getData"
             label="Search Here ! "
             placeholder="hindi pa gumagana HAHAHAHAHa"
             filled
             dense
             prepend-inner-icon="mdi-magnify"
-          ></v-text-field>
+          >
+            <v-btn depressed type="submit"> go </v-btn></v-text-field
+          >
+          {{ searchData }}
         </div>
 
         <v-menu bottom left>
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon color="yellow" v-bind="attrs" v-on="on">
-              <v-icon @click:type="submit">mdi-dots-vertical</v-icon>
+              <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
           </template>
 
@@ -102,16 +105,16 @@ export default {
   myTable,
   data() {
     return {
-      search: null,
+      searchData: null,
       data: [],
     };
   },
   methods: {
     async getData() {
       await this.$axios
-        .get(`https://jsonplaceholder.typicode.com/posts?userId=${this.search}`)
+        .get(`https://jsonplaceholder.typicode.com/posts/${this.searchData}`)
         .then((response) => {
-          this.data = response.data.item;
+          this.Searchdata = response.data.item;
           console.log(this.data);
         })
         .catch((error) => {

@@ -245,16 +245,17 @@
             <v-tab>
               <router-link class="routerTabHP" to="/home">HomePage</router-link>
             </v-tab>
-            <v-tab
-              ><router-link class="routerTabPP" to="/post1"
+            <!--  <v-tab
+              >
+			  <router-link class="routerTabPP" to="/post1"
                 >PostPage</router-link
               ></v-tab
             >
-            <!-- <v-tab
+            <v-tab
               ><router-link class="routerTabPP" to="/comms"
                 >Comments</router-link
               ></v-tab
-            > -->
+            >-->
           </v-tabs>
         </template>
       </v-app-bar>

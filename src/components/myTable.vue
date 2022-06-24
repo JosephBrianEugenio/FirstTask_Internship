@@ -6,9 +6,9 @@
     </v-card>
 
     <v-row no-gutters v-for="item in post" v-bind:key="item.id">
-      <v-col :cols="15">
-        <v-card class="mx-auto" max-width="auto" outlined>
-          <v-toolbar color="	#FFC0CB" dark dense flat>
+      <v-col :cols="30">
+        <v-card class="mx-auto" max-width="auto" outlined :cols="5">
+          <v-toolbar color="rgb(106, 118, 171)" dark dense flat>
             <v-toolbar-title class="text-body-2"
               >{{ item.id }}
             </v-toolbar-title>
@@ -45,6 +45,8 @@ export default {
   data() {
     return {
       post: [],
+      search: null,
+      data: [],
     };
   },
   mounted() {
@@ -65,6 +67,21 @@ export default {
   methods: {
     Data(id) {
       this.$router.push(`post/${id}`, `post/${id}/comments${id}`);
+    },
+    methods: {
+      async getData() {
+        await this.$axios
+          .get(
+            `https://jsonplaceholder.typicode.com/posts?userId=${this.search}`
+          )
+          .then((response) => {
+            this.data = response.data.item;
+            console.log(this.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
     },
   },
 };

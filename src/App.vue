@@ -38,7 +38,7 @@
         <v-menu bottom left>
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon color="yellow" v-bind="attrs" v-on="on">
-              <v-icon>mdi-dots-vertical</v-icon>
+              <v-icon @click:type="submit">mdi-dots-vertical</v-icon>
             </v-btn>
           </template>
 
@@ -103,13 +103,22 @@ export default {
   data() {
     return {
       search: null,
+      data: [],
     };
   },
-  // methods {
-  // 	async getData(){
-  // 		console.log(this.search)
-  // 	}
-  // }
+  methods: {
+    async getData() {
+      await this.$axios
+        .get(`https://jsonplaceholder.typicode.com/posts?userId=${this.search}`)
+        .then((response) => {
+          this.data = response.data.item;
+          console.log(this.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 

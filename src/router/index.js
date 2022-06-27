@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import post from "../components/myTable.vue";
-import post1 from "../components/myPoste.vue";
+import post from "../views/myTable.vue";
+import post1 from "../views/myPoste.vue";
 
 Vue.use(VueRouter);
 

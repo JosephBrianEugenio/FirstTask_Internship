@@ -102,7 +102,7 @@
   </div>
 </template>
 <script>
-import myTable from "./components/myTable.vue";
+import myTable from "./views/myTable.vue";
 export default {
   name: "App",
   myTable,

@@ -9,7 +9,7 @@
         v-model.trim="searchData"
         @submit.prevent="getData"
         label="Search Here ! "
-        placeholder="hindi pa gumagana"
+        placeholder="Title"
         filled
         dense
         prepend-inner-icon="mdi-magnify"

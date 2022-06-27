@@ -26,9 +26,7 @@ export default {
   },
   mounted() {
     this.$axios
-      .get(
-        `https://jsonplaceholder.typicode.com/posts/1/comments/${this.$route.params.id}`
-      )
+      .get(`https://jsonplaceholder.typicode.com/posts/comments/`)
       .then((response) => {
         this.post = response.data;
         console.log(this.post);

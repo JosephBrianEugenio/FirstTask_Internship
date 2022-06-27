@@ -23,7 +23,10 @@
         <v-toolbar-title class="title">Axios</v-toolbar-title>
 
         <v-spacer></v-spacer>
-        <div class="searchbar">
+
+        <!--
+			//searchbar sa APP
+			 <div class="searchbar">
           <v-text-field
             v-model="searchData"
             @submit.prevent="getData"
@@ -36,7 +39,7 @@
             <v-btn depressed type="submit"> go </v-btn></v-text-field
           >
           {{ searchData }}
-        </div>
+        </div> -->
 
         <v-menu bottom left>
           <template v-slot:activator="{ on, attrs }">
@@ -109,6 +112,7 @@ export default {
       data: [],
     };
   },
+  //SearchData
   methods: {
     async getData() {
       await this.$axios

@@ -8,7 +8,10 @@
           </v-toolbar>
           <v-list-item>
             <v-list-item-content>
-              <v-card-title> {{ post }}</v-card-title>
+              <v-card-title>UserID: {{ post.userId }}</v-card-title>
+              <v-card-title>ID: {{ post.id }}</v-card-title>
+              <v-card-title>Title: {{ post.title }}</v-card-title>
+              <v-card-title>Body: {{ post.body }}</v-card-title>
             </v-list-item-content>
 
             <v-list-item-avatar
@@ -26,6 +29,9 @@
             </v-btn>
           </v-card-actions> -->
         </v-card>
+        <v-toolbar color="rgb(106, 118, 171)" dark dense flat>
+          <v-toolbar-title class="text-body-2"> Comments </v-toolbar-title>
+        </v-toolbar>
         <v-card
           class="mx-auto"
           max-width="auto"
@@ -33,9 +39,6 @@
           v-for="item in postComments"
           v-bind:key="item.id"
         >
-          <v-toolbar color="rgb(106, 118, 171)" dark dense flat>
-            <v-toolbar-title class="text-body-2"> Comments </v-toolbar-title>
-          </v-toolbar>
           <v-list-item>
             <v-list-item-content>
               <v-card-title>ID#:{{ item.id }}</v-card-title>
@@ -66,6 +69,7 @@ export default {
   data() {
     return {
       post: [],
+      postComments: [],
     };
   },
   mounted() {
@@ -75,10 +79,12 @@ export default {
       )
       .then((response) => {
         this.post = response.data;
-        console.log("Single Data", this.post);
+        console.log(this.post);
       });
     this.$axios
-      .get(`https://jsonplaceholder.typicode.com/posts/1/comments`)
+      .get(
+        `https://jsonplaceholder.typicode.com/posts/${this.$route.params.id}/comments`
+      )
       .then((response) => {
         this.postComments = response.data;
         console.log(response.data);
@@ -88,11 +94,11 @@ export default {
   created() {
     this.post = this.$route.params.data;
   },
-  //   methods: {
-  //     data(id) {
-  //       this.$router.push(`comments/${id}`);
-  //     },
-  //   },
+  methods: {
+    data(id) {
+      this.$router.push(`comments/${id}`);
+    },
+  },
 };
 </script>
 

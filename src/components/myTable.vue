@@ -4,14 +4,28 @@
       <v-card-title> This is the tile</v-card-title>
       <v-card-text> This is the text</v-card-text>
     </v-card> -->
+    <div class="searchbar">
+      <v-text-field
+        v-model.trim="searchData"
+        @submit.prevent="getData"
+        label="Search Here ! "
+        placeholder="hindi pa gumagana"
+        filled
+        dense
+        prepend-inner-icon="mdi-magnify"
+        @keyup="getApiData"
+      >
+        {{ getApiData }}
+        <li v-for="item in post" :key="item.id">{{ item.id }}</li>
+      </v-text-field>
+      <!-- {{ getApiData() }} -->
+    </div>
 
     <v-row no-gutters v-for="item in post" v-bind:key="item.id">
       <v-col :cols="30">
-        <v-card class="mx-auto" max-width="auto" outlined :cols="5">
+        <v-card class="mx-auto" max-width="auto" outlined elevation="14" shaped>
           <v-toolbar color="rgb(106, 118, 171)" dark dense flat>
-            <v-toolbar-title class="text-body-2"
-              >{{ item.id }}
-            </v-toolbar-title>
+            <v-toolbar-title class="text-body-2"></v-toolbar-title>
           </v-toolbar>
           <v-list-item>
             <v-list-item-content>
@@ -45,8 +59,7 @@ export default {
   data() {
     return {
       post: [],
-      searchData: null,
-      data: [],
+      searchData: "",
     };
   },
   mounted() {
@@ -63,24 +76,35 @@ export default {
   },
   created() {
     this.post = this.$route.params.data;
+    // this.SearchData();
+    this.GetApiData();
   },
   methods: {
     Data(id) {
-      this.$router.push(`post/${id}`, `post/${id}/comments${id}`);
+      this.$router.push(`post/${id}`);
     },
-    methods: {
-      async getData() {
-        await this.$axios
-          .get(
-            `https://jsonplaceholder.typicode.com/posts?userId=${this.searchData}`
-          )
-          .then((response) => {
-            this.Searchdata = response.data.item;
-            console.log(this.Searchdata);
-          })
-          .catch((error) => {
-            console.log(error);
+    getApiData() {
+      this.$axios
+        .get(`https://jsonplaceholder.typicode.com/posts`)
+        .then((response) => {
+          this.post = response.data;
+          if (this.searchData) {
+            this.post = response.data.filter((item) =>
+              item.id.toLowerCase().includes(this.searchData.toLowerCase())
+            );
+          } else {
+            this.post = response.data;
+          }
+        });
+    },
+    computed: {
+      getApiData() {
+        if (this.people) {
+          return this.post.filter((post) => {
+            return post.id.match(this.searchData);
           });
+        }
+        return false;
       },
     },
   },

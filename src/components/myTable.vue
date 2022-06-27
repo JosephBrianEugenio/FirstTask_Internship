@@ -87,10 +87,9 @@ export default {
       this.$axios
         .get(`https://jsonplaceholder.typicode.com/posts`)
         .then((response) => {
-          this.post = response.data;
           if (this.searchData) {
             this.post = response.data.filter((item) =>
-              item.id.toLowerCase().includes(this.searchData.toLowerCase())
+              item.title.toLowerCase().includes(this.searchData.toLowerCase())
             );
           } else {
             this.post = response.data;
@@ -98,13 +97,10 @@ export default {
         });
     },
     computed: {
-      getApiData() {
-        if (this.people) {
-          return this.post.filter((post) => {
-            return post.id.match(this.searchData);
-          });
-        }
-        return false;
+      filteredData: function () {
+        return this.post.filter((post) => {
+          return post.title.match(this.searchData);
+        });
       },
     },
   },

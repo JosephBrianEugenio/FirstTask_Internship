@@ -85,7 +85,11 @@ export default {
     },
     getApiData() {
       this.$axios
-        .get(`https://jsonplaceholder.typicode.com/posts`)
+        .get(`https://jsonplaceholder.typicode.com/posts`, {
+          params: {
+            _limit: 15,
+          },
+        })
         .then((response) => {
           if (this.searchData) {
             this.post = response.data.filter((item) =>
